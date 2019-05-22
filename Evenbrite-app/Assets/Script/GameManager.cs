@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int[] numRandom;
+    public int[] numRandom = new int[4];
     public int[] persona;
     public int i = 0;
     public int correct = 0;
@@ -17,12 +17,14 @@ public class GameManager : MonoBehaviour
               {
                   correct++;
               }
-            else if (persona[i] == numRandom[0] || persona[i] == numRandom[1] || persona[i] == numRandom[2] || persona[i] == numRandom[3])
+            else if (numRandom[i] == persona[0] || numRandom[i] == persona[1] || numRandom[i] == persona[2] || numRandom[i] == persona[3])
             {
                 casicorrect++;
             }
 
         }
+
+
 
 
     }
@@ -34,5 +36,23 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /* void NumberGenerator()
+    {
+        Random rand = new Random();
+        int[] randArray = { 10, 10, 10, 10 };
+
+        for (int i = 0; i < randArray.Length; i++)
+        {
+            int temp
+            while (temp == randArray[0] || temp == randArray[1] || temp == randArray[2] || temp == randArray[3])
+            {
+                temp = rand(9);
+            }
+            randArray[i] = temp;
+        }**/
+       
     }
+}
+
+
 

@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numRandom: 01000000020000000300000004000000
-  persona: 01000000030000000200000008000000
+  persona: 01000000030000000200000003000000
   i: 0
   correct: 0
   casicorrect: 0
