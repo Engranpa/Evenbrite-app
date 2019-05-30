@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviour
 
     public int correct = 0;
     public int casicorrect = 0;
+    public bool error = false;
    
     public InputField input0;
     public InputField input1;
     public InputField input2;
     public InputField input3;
     public Text history;
-    public Text resultado;
+  
     public Text g0;     
     public Text g1;
     public Text g2;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
         DisplayNumbers();
         Reshuffle(numbers); //mezcla los numeros del array
         System.Array.Copy(numbers, numRandom, 4); // copia los primeros 4 numeros
-        history.text = "hay un numero secreto de 4 digitos, ingresa 4 numeros del 0 al 9!";
+        history.text = "hay un numero secreto de 4 digitos, ingresa 4 numeros del 0 al 9! \n";
     }
 
     void Update()
@@ -48,7 +49,12 @@ public class GameManager : MonoBehaviour
         casicorrect = 0;
         for (int i = 0; i < 4; i++)
         {
-            if (numRandom[i] == guesspersona[i])  // compara cada casilla del array con la del otro
+            if (guesspersona[0] == guesspersona[1] || guesspersona[0] == guesspersona[2] || numRandom[0] == guesspersona[2] || guesspersona[0] == guesspersona[3] || guesspersona[1] == guesspersona[2]
+                || guesspersona[1] == guesspersona[3] || guesspersona[2] == guesspersona[3])
+            {
+                error = true;
+            }
+            else if (numRandom[i] == guesspersona[i])  // compara cada casilla del array con la del otro
             {
                 correct++;
             }
@@ -56,10 +62,7 @@ public class GameManager : MonoBehaviour
             { // si no es igual la compara con el resto 
                 casicorrect++;
             }
-            else if(guesspersona[i] == guesspersona[0] || guesspersona[i] == guesspersona[1] || numRandom[i] == guesspersona[2] || guesspersona[i] == guesspersona[3])
-            {
-
-            }
+            
         }
 
         ConsoleHistory();
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SelectNumbers(InputField x)         // toma el input y lo convierte a int, los asigna al array de numeros.
+    public void SelectNumbers(InputField x )         // toma el input y lo convierte a int, los asigna al array de numeros.
     {
         if (int.Parse(x.text) < 10)
         {
@@ -98,8 +101,12 @@ public class GameManager : MonoBehaviour
             {
                 guesspersona[3] = int.Parse(x.text);
             }
-
-
+            
+           
+        }
+        else
+        {
+            history.text = history.text + "Digito no correcto \n";
         }
         DisplayNumbers();
 
@@ -117,12 +124,18 @@ public class GameManager : MonoBehaviour
 
         if (correct == 4)
         {
-            resultado.text = "GANASTE!";
+            history.text = "GANASTE!";
         }
+        else if(error == true){
+            history.text = "No se aceptan numeros duplicados \n";
+            error = false;
+        }
+
         else
         {
-            resultado.text = "El numero " + guesspersona[0] + guesspersona[1] + guesspersona[2] + guesspersona[3] + " tiene: " + correct + "correctos y " + casicorrect + " numeros en diferentes casillas. \n";
-            history.text = history.text + resultado.text;
+
+            history.text = history.text + "El numero " + guesspersona[0] + guesspersona[1] + guesspersona[2] + guesspersona[3] + " tiene: " + correct + "correctos y " + casicorrect + " numeros en diferentes casillas. \n";
+
         }
         
     }
