@@ -7,25 +7,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private readonly int[] numbers = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    public int[] numRandom = new int[4];
+    private readonly int[] numRandom = new int[4];
     public int[] guesspersona = new int[4] { 0, 0, 0, 0 };
 
 
-    public int correct = 0;
-    public int casicorrect = 0;
-    public bool error = false;
-   
+    private int correct = 0;
+    private int casicorrect = 0;
+    private bool error = false;
+
     public InputField input0;
     public InputField input1;
     public InputField input2;
     public InputField input3;
     public Text history;
-  
-    public Text g0;     
+
+    public Text g0;
     public Text g1;
     public Text g2;
     public Text g3;
-   
+
 
 
     void Start()
@@ -33,23 +33,22 @@ public class GameManager : MonoBehaviour
         DisplayNumbers();
         Reshuffle(numbers); //mezcla los numeros del array
         System.Array.Copy(numbers, numRandom, 4); // copia los primeros 4 numeros
-        history.text = "hay un numero secreto de 4 digitos, ingresa 4 numeros del 0 al 9! \n";
+        DisplayHistory("hay un numero secreto de 4 digitos, ingresa 4 numeros del 0 al 9! \n");
     }
 
-    void Update()
+    public void Restart()
     {
-
-
+        Start();
     }
 
-    
+
     public void Compare()
     {
         correct = 0;
         casicorrect = 0;
         for (int i = 0; i < 4; i++)
         {
-            if (guesspersona[0] == guesspersona[1] || guesspersona[0] == guesspersona[2] || numRandom[0] == guesspersona[2] || guesspersona[0] == guesspersona[3] || guesspersona[1] == guesspersona[2]
+            if (guesspersona[0] == guesspersona[1] || guesspersona[0] == guesspersona[2] || guesspersona[0] == guesspersona[3] || guesspersona[1] == guesspersona[2]
                 || guesspersona[1] == guesspersona[3] || guesspersona[2] == guesspersona[3])
             {
                 error = true;
@@ -62,7 +61,7 @@ public class GameManager : MonoBehaviour
             { // si no es igual la compara con el resto 
                 casicorrect++;
             }
-            
+
         }
 
         ConsoleHistory();
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SelectNumbers(InputField x )         // toma el input y lo convierte a int, los asigna al array de numeros.
+    public void SelectNumbers(InputField x)         // toma el input y lo convierte a int, los asigna al array de numeros.
     {
         if (int.Parse(x.text) < 10)
         {
@@ -101,16 +100,14 @@ public class GameManager : MonoBehaviour
             {
                 guesspersona[3] = int.Parse(x.text);
             }
-            
-           
+
+
         }
         else
         {
-            history.text = history.text + "Digito no correcto \n";
+            DisplayHistory(history.text + "Digito no correcto \n");
         }
         DisplayNumbers();
-
-
     }
     private void DisplayNumbers()
     {         //actualiza los numeros sobre el input
@@ -119,24 +116,28 @@ public class GameManager : MonoBehaviour
         g2.text = "" + guesspersona[2];
         g3.text = "" + guesspersona[3];
     }
-
     private void ConsoleHistory() {
 
         if (correct == 4)
         {
-            history.text = "GANASTE!";
+            DisplayHistory("GANASTE!");
         }
-        else if(error == true){
-            history.text = "No se aceptan numeros duplicados \n";
+        else if (error == true) {
+            DisplayHistory("No se aceptan numeros duplicados \n");
             error = false;
         }
-
         else
         {
-
-            history.text = history.text + "El numero " + guesspersona[0] + guesspersona[1] + guesspersona[2] + guesspersona[3] + " tiene: " + correct + "correctos y " + casicorrect + " numeros en diferentes casillas. \n";
-
+            DisplayHistory(history.text + "El numero " + guesspersona[0] + guesspersona[1] + guesspersona[2] + guesspersona[3] + " tiene: " + correct + "correctos y " + casicorrect + " numeros en diferentes casillas. \n");
         }
+
+    }
+
+    public void Exit(){
+        Application.Quit();
+}
+    public void DisplayHistory(string ht) {
+        history.text = ht;
         
     }
 }
