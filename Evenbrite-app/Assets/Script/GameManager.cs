@@ -133,9 +133,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void Exit(){
-        Application.Quit();
-}
+    
     public void DisplayHistory(string ht) {
         history.text = ht;
         
